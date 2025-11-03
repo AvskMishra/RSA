@@ -3,6 +3,7 @@ namespace RiskApp.Application.Risk;
 public record RiskAssessRequestDto
 {
     public Guid ProfileId { get; init; }
+    public bool UseExternalProviders { get; init; } = true;
 }
 public record RiskAssessmentReadDto
 {

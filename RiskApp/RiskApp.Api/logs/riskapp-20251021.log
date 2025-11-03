@@ -1,0 +1,70 @@
+2025-10-21 16:54:38.033 +05:30 [INF] Serilog configured from serilog.config.json
+2025-10-21 16:55:19.540 +05:30 [INF] HTTP GET /swagger/index.html responded 200 in 272.6188 ms
+2025-10-21 16:55:19.989 +05:30 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 255.7820 ms
+2025-10-21 16:55:39.570 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-10-21 16:55:39.746 +05:30 [INF] Listing profiles, skip 0, take 50
+2025-10-21 16:55:39.938 +05:30 [INF] HTTP GET /api/Profiles responded 200 in 396.0894 ms
+2025-10-21 17:07:58.914 +05:30 [INF] Serilog configured from serilog.config.json
+2025-10-21 17:08:27.963 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-10-21 17:08:28.134 +05:30 [INF] HTTP GET /api/RiskAssessments/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb responded 404 in 298.3862 ms
+2025-10-21 17:08:43.479 +05:30 [INF] HTTP GET /api/RiskAssessments/by-profile/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb responded 200 in 54.0273 ms
+2025-10-21 17:09:17.433 +05:30 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-10-21 17:09:23.092 +05:30 [ERR] HTTP POST /api/RiskAssessments/assess responded 500 in 5717.5826 ms
+System.InvalidOperationException: Profile not found.
+   at RiskAssessmentService.AssessAsync(RiskAssessRequestDto request, CancellationToken ct) in C:\LearningPOC\2k25\RAS\RiskApp\RiskApp.Infrastructure\RiskAssessmentService.cs:line 28
+   at RiskApp.Api.Controllers.RiskAssessmentsController.Assess(RiskAssessRequestDto request, CancellationToken ct) in C:\LearningPOC\2k25\RAS\RiskApp\RiskApp.Api\Controllers\RiskAssessmentsController.cs:line 20
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2025-10-21 17:09:23.160 +05:30 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Profile not found.
+   at RiskAssessmentService.AssessAsync(RiskAssessRequestDto request, CancellationToken ct) in C:\LearningPOC\2k25\RAS\RiskApp\RiskApp.Infrastructure\RiskAssessmentService.cs:line 28
+   at RiskApp.Api.Controllers.RiskAssessmentsController.Assess(RiskAssessRequestDto request, CancellationToken ct) in C:\LearningPOC\2k25\RAS\RiskApp\RiskApp.Api\Controllers\RiskAssessmentsController.cs:line 20
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2025-10-21 17:09:50.177 +05:30 [INF] HTTP POST /api/RiskAssessments/assess responded 201 in 519.6144 ms
+2025-10-21 23:42:01.565 +05:30 [INF] Serilog configured from serilog.config.json
+2025-10-21 23:42:04.661 +05:30 [INF] OpenTelemetry configured (Enable=true).
+2025-10-21 23:43:19.724 +05:30 [INF] HTTP GET /swagger/index.html responded 200 in 201.7882 ms
+2025-10-21 23:43:20.000 +05:30 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 104.2724 ms
+2025-10-21 23:43:28.886 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-10-21 23:43:29.162 +05:30 [INF] Listing profiles, skip 0, take 50
+2025-10-21 23:43:29.537 +05:30 [INF] HTTP GET /api/Profiles responded 200 in 695.5363 ms
+2025-10-21 23:58:07.045 +05:30 [INF] Serilog configured from serilog.config.json
+2025-10-21 23:58:07.145 +05:30 [INF] OpenTelemetry configured (Enable=true).
+2025-10-21 23:58:10.152 +05:30 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 154.8004 ms
+2025-10-21 23:58:17.629 +05:30 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 40.3836 ms
+2025-10-21 23:58:22.372 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-10-21 23:58:22.399 +05:30 [INF] Diagnostics ping received. TraceId=264c0ef54402dd1f69e26b03922d9a3c
+2025-10-21 23:58:22.420 +05:30 [INF] HTTP GET /api/Diagnostics/ping responded 200 in 75.5761 ms
+2025-10-21 23:58:39.156 +05:30 [INF] Diagnostics ping received. TraceId=161391992f052f3b7a1d069c5e67085a
+2025-10-21 23:58:39.159 +05:30 [INF] HTTP GET /api/Diagnostics/ping responded 200 in 3.7411 ms
+2025-10-21 23:58:39.910 +05:30 [INF] Diagnostics ping received. TraceId=d5b40dc1d2b6fd7764d1498baee8d3c9
+2025-10-21 23:58:39.912 +05:30 [INF] HTTP GET /api/Diagnostics/ping responded 200 in 2.4570 ms
+2025-10-21 23:58:41.310 +05:30 [INF] Diagnostics ping received. TraceId=4561315d815016b36629ba0ff682dc48
+2025-10-21 23:58:41.312 +05:30 [INF] HTTP GET /api/Diagnostics/ping responded 200 in 2.3731 ms

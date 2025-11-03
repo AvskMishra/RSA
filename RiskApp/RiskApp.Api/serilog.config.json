@@ -1,0 +1,27 @@
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.File", "Serilog.Enrichers.Environment", "Serilog.Enrichers.Process", "Serilog.Enrichers.Thread" ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning",
+        "System": "Warning"
+      }
+    },
+    "WriteTo": [
+      { "Name": "Console" },
+      {
+        "Name": "File",
+        "Args": {
+          "path": "logs/riskapp-.log",
+          "rollingInterval": "Day",
+          "retainedFileCountLimit": 7,
+          "fileSizeLimitBytes": 10485760,
+          "rollOnFileSizeLimit": true
+        }
+      }
+    ],
+    "Enrich": [ "FromLogContext", "WithMachineName", "WithProcessId", "WithThreadId" ],
+    "Properties": { "Application": "RiskApp.Api" }
+  }
+}

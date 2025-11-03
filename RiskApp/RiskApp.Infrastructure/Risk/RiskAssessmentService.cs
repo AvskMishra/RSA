@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RiskApp.Application.Risk;
 using RiskApp.Domain.Entities;
 using RiskApp.Domain.Enums;
@@ -9,11 +10,17 @@ namespace RiskApp.Infrastructure.Risk;
 public class RiskAssessmentService : IRiskAssessmentService
 {
     private readonly RiskAppDbContext _db;
+    private readonly ILogger<RiskAssessmentService> _logger;
 
-    public RiskAssessmentService(RiskAppDbContext db) => _db = db;
+    public RiskAssessmentService(RiskAppDbContext db, ILogger<RiskAssessmentService> logger)
+    {
+        _db = db;
+        _logger = logger;
+    }
 
     public async Task<RiskAssessmentReadDto> AssessAsync(RiskAssessRequestDto request, CancellationToken ct = default)
     {
+        _logger.LogInformation( "Assessing risk for ProfileId={ProfileId}, UseExternal={UseExternal}",request.ProfileId, request.UseExternalProviders);
         // 1) Load the inputs we need (single round-trip)
         var profile = await _db.Profiles
             .Include(p => p.EmploymentHistory)
@@ -21,16 +28,22 @@ public class RiskAssessmentService : IRiskAssessmentService
             .FirstOrDefaultAsync(p => p.Id == request.ProfileId, ct);
 
         if (profile is null)
+        {
+            _logger.LogWarning("ProfileId {ProfileId} not found for risk assessment", request.ProfileId);
             throw new InvalidOperationException("Profile not found.");
+        }
 
         // 2) Extract features
         var currentEmployment = profile.EmploymentHistory.FirstOrDefault(e => e.IsCurrent);
-        var yearsInCurrentJob = currentEmployment is null
-            ? 0
-            : Math.Max(0, (DateTime.UtcNow.Date - new DateTime(currentEmployment.StartDate.Year, currentEmployment.StartDate.Month, currentEmployment.StartDate.Day)).TotalDays / 365.25);
+        _logger.LogInformation("Current employment found: {HasCurrentEmployment}", currentEmployment is not null);
+        var yearsInCurrentJob = currentEmployment is null ? 0
+            : Math.Max(0, (DateTime.UtcNow.Date - new DateTime(currentEmployment.StartDate.Year,
+                           currentEmployment.StartDate.Month, currentEmployment.StartDate.Day)).TotalDays / 365.25);
 
         var latestEarning = profile.Earnings.OrderByDescending(e => e.EffectiveFrom).FirstOrDefault();
+        _logger.LogInformation("Latest earning found: {HasLatestEarning}", latestEarning is not null);
         var totalMonthlyIncome = latestEarning is null ? 0m : latestEarning.MonthlyIncome + latestEarning.OtherMonthlyIncome;
+        _logger.LogInformation("Total monthly income calculated: {TotalMonthlyIncome}", totalMonthlyIncome);
 
         // 3) Scorecard v0 (simple, transparent)
         //    Range target ~ 300..850 (loosely credit-score shaped). Clamp 0..1000 for safety.
@@ -73,6 +86,7 @@ public class RiskAssessmentService : IRiskAssessmentService
 
         // Recommendations (brief)
         var recs = BuildRecommendations(score, totalMonthlyIncome, yearsInCurrentJob, currentEmployment is not null, latestEarning is not null);
+        _logger.LogInformation("Risk assessment completed with Score {Score}, Decision {Decision}", score, decision);
 
         // 4) Persist assessment
         var assessment = new RiskAssessment(profile.Id);
@@ -80,19 +94,30 @@ public class RiskAssessmentService : IRiskAssessmentService
 
         _db.RiskAssessments.Add(assessment);
         await _db.SaveChangesAsync(ct);
+        _logger.LogInformation("Risk assessment recorded with ID {RiskAssessmentId}", assessment.Id);
 
         return Map(assessment);
     }
 
     public async Task<RiskAssessmentReadDto?> GetAsync(Guid id, CancellationToken ct = default)
     {
+        _logger.LogInformation("Retrieving risk assessment with ID {RiskAssessmentId}", id);
         var e = await _db.RiskAssessments.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, ct);
-        return e is null ? null : Map(e);
+        if (e is null)
+        {
+            _logger.LogInformation("Risk assessment with ID {RiskAssessmentId} not found", id);
+            return null;
+        }
+        else
+        {
+            return Map(e);
+        }
     }
 
     public async Task<IReadOnlyList<RiskAssessmentReadDto>> ListByProfileAsync(Guid profileId, int skip = 0, int take = 50, CancellationToken ct = default)
     {
-        return await _db.RiskAssessments.AsNoTracking()
+        _logger.LogInformation("Listing risk assessments for ProfileId {ProfileId}, skip {Skip}, take {Take}", profileId, skip, take);
+          return await _db.RiskAssessments.AsNoTracking()
             .Where(x => x.ProfileId == profileId)
             .OrderByDescending(x => x.AssessedOnUtc)
             .Skip(skip).Take(take)
@@ -113,12 +138,17 @@ public class RiskAssessmentService : IRiskAssessmentService
         var tips = new List<string>();
 
         if (!hasEmployment) tips.Add("Add current employment or update employment status.");
+
         if (!hasEarning) tips.Add("Provide a recent earning snapshot.");
+
         if (income < 25000m) tips.Add("Consider increasing stable monthly income or reducing fixed expenses.");
+
         if (yearsInCurrent < 1.0) tips.Add("Longer tenure at current job can improve stability.");
 
         if (score >= 700) tips.Add("Eligible for approval; maintain income stability.");
+
         else if (score >= 600) tips.Add("Borderline: submit additional income proofs or employment history.");
+
         else tips.Add("High risk: improve income stability and tenure, then reassess.");
 
         return string.Join(" ", tips);

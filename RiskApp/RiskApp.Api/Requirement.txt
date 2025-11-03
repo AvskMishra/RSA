@@ -29,3 +29,13 @@ Tech-Stack:
 2.  React or Angular
 3. SQL Server or PostgreSQL or MongoDB
 4. azure or AWS(document storage,authentication,messaging,notification etc)
+
+
+1.Observability: Serilog + request logging + error middleware. //DONE
+2.Validation: FluentValidation on DTOs + proper 400 responses.
+
+3.Auth (JWT) & basic roles (Reader, Writer).
+
+4.Analytics endpoints: decision distribution, average score, trend by month.
+5.Containerization: Dockerfile + docker-compose (SQLite volume).
+6.CI: GitHub Actions or Azure DevOps pipeline to build/test/publish API.

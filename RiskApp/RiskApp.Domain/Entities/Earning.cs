@@ -13,7 +13,16 @@ public class Earning : BaseEntity
     public Profile? Profile { get; private set; }
 
     private Earning() { }
-    public Earning(Guid profileId, decimal monthlyIncome, decimal otherMonthlyIncome, DateOnly effectiveFrom, string currency = "INR")
+    public Earning(Guid profileId, decimal monthlyIncome, decimal otherMonthlyIncome, DateOnly effectiveFrom, string currency = "INR") : base()
+    {
+        ProfileId = profileId;
+        MonthlyIncome = monthlyIncome;
+        OtherMonthlyIncome = otherMonthlyIncome;
+        EffectiveFrom = effectiveFrom;
+        Currency = currency;
+    }
+    public Earning(Guid id, Guid profileId, decimal monthlyIncome, decimal otherMonthlyIncome, DateOnly effectiveFrom, string currency = "INR")
+       : base(id)
     {
         ProfileId = profileId;
         MonthlyIncome = monthlyIncome;
