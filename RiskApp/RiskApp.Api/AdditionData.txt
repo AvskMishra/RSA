@@ -1,37 +1,4 @@
-﻿// --- Minimal CRUD for Profile ---
-app.MapPost("/api/profiles", async (ProfileCreateDto dto, IProfileService svc, CancellationToken ct) =>
-{
-    var created = await svc.CreateAsync(dto, ct);
-    return Results.Created($"/api/profiles/{created.Id}", created);
-});
-
-app.MapGet("/api/profiles/{id:guid}", async (Guid id, IProfileService svc, CancellationToken ct) =>
-{
-    var found = await svc.GetAsync(id, ct);
-    return found is null ? Results.NotFound() : Results.Ok(found);
-});
-
-app.MapGet("/api/profiles", async (int skip, int take, IProfileService svc, CancellationToken ct) =>
-{
-    var list = await svc.ListAsync(skip, take, ct);
-    return Results.Ok(list);
-});
-
-app.MapPut("/api/profiles/{id:guid}", async (Guid id, ProfileUpdateDto dto, IProfileService svc, CancellationToken ct) =>
-{
-    var ok = await svc.UpdateAsync(id, dto, ct);
-    return ok ? Results.NoContent() : Results.NotFound();
-});
-
-app.MapDelete("/api/profiles/{id:guid}", async (Guid id, IProfileService svc, CancellationToken ct) =>
-{
-    var ok = await svc.DeleteAsync(id, ct);
-    return ok ? Results.NoContent() : Results.NotFound();
-});
-
-
-
-//migration commands
+﻿//migration commands
 Add-Migration InitialCreate -Project RiskApp.Infrastructure -StartupProject RiskApp.Api -OutputDir Persistence\Migrations
 Update-Database -Project RiskApp.Infrastructure -StartupProject RiskApp.Api
 
@@ -65,3 +32,5 @@ Install-Package OpenTelemetry.Exporter.Open
 
 
  nerdctl run -d --name jaeger -p 16686:16686 -p 6831:6831/udp jaegertracing/all-in-one:latest
+ endpoints to see all stack metrices and logs
+ http://localhost:16686/search

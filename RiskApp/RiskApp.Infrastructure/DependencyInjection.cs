@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RiskApp.Application.Abstractions;
+using RiskApp.Application.Analytics;
 using RiskApp.Application.Earnings;
 using RiskApp.Application.Profiles;
 using RiskApp.Application.Risk;
 using RiskApp.Application.Risk.Providers;
 using RiskApp.Application.Work;
+using RiskApp.Infrastructure.Analytics;
 using RiskApp.Infrastructure.Earnings;
 using RiskApp.Infrastructure.Persistence;
 using RiskApp.Infrastructure.Profiles;
@@ -37,6 +39,8 @@ public static class DependencyInjection
         // NEW: External providers (mock; swap to real later)
         services.AddScoped<ICreditProvider, MockCreditProvider>();
         services.AddScoped<IFraudProvider, MockFraudProvider>();
+
+        services.AddScoped<IAnalyticsService, AnalyticsService>();
         return services;
     }
 }
