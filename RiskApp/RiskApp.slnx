@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="RiskApp.Api/RiskApp.Api.csproj" />
+  <Project Path="RiskApp.Application/RiskApp.Application.csproj" />
+  <Project Path="RiskApp.Domain/RiskApp.Domain.csproj" />
+  <Project Path="RiskApp.Infrastructure/RiskApp.Infrastructure.csproj" />
+</Solution>
