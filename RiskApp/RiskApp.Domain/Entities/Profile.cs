@@ -1,5 +1,6 @@
 ﻿using RiskApp.Domain.Abstraction;
 namespace RiskApp.Domain.Entities;
+
 public class Profile : BaseEntity
 {
     public string FullName { get; private set; } = default!;
@@ -13,7 +14,19 @@ public class Profile : BaseEntity
     public ICollection<EmploymentRecord> EmploymentHistory { get; private set; } = new List<EmploymentRecord>();
     public ICollection<Earning> Earnings { get; private set; } = new List<Earning>();
     private Profile() { } // EF
-    public Profile(string fullName, DateOnly dob, string nationalId, string? email = null, string? phone = null, string? address = null)
+    public Profile(string fullName, DateOnly dob, string nationalId, string? email = null, string? phone = null, string? address = null) : base()
+    {
+        FullName = fullName.Trim();
+        DateOfBirth = dob;
+        NationalId = nationalId.Trim();
+        Email = email;
+        Phone = phone;
+        Address = address;
+    }
+
+    // seeding/testing usage (assign deterministic Id)
+    public Profile(Guid id, string fullName, DateOnly dob, string nationalId, string? email = null, string? phone = null, string? address = null)
+        : base(id)
     {
         FullName = fullName.Trim();
         DateOfBirth = dob;

@@ -17,7 +17,18 @@ public class EmploymentRecord : BaseEntity
     public Profile? Profile { get; private set; }
 
     private EmploymentRecord() { } // EF
-    public EmploymentRecord(Guid profileId, string employerName, EmploymentType type, DateOnly start, decimal monthlyIncome, DateOnly? end = null)
+    public EmploymentRecord(Guid profileId, string employerName, EmploymentType type, DateOnly start, decimal monthlyIncome, DateOnly? end = null) : base()
+    {
+        ProfileId = profileId;
+        EmployerName = employerName.Trim();
+        Type = type;
+        StartDate = start;
+        EndDate = end;
+        IsCurrent = end is null;
+        MonthlyIncome = monthlyIncome;
+    }
+    public EmploymentRecord(Guid id, Guid profileId, string employerName, EmploymentType type, DateOnly start, decimal monthlyIncome, DateOnly? end = null)
+       : base(id)
     {
         ProfileId = profileId;
         EmployerName = employerName.Trim();

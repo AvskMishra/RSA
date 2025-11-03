@@ -34,3 +34,34 @@ app.MapDelete("/api/profiles/{id:guid}", async (Guid id, IProfileService svc, Ca
 //migration commands
 Add-Migration InitialCreate -Project RiskApp.Infrastructure -StartupProject RiskApp.Api -OutputDir Persistence\Migrations
 Update-Database -Project RiskApp.Infrastructure -StartupProject RiskApp.Api
+
+
+
+from package manager console
+//for serilog logging
+# Serilog
+Install-Package Serilog
+Install-Package Serilog.Sinks.Console
+Install-Package Serilog.Sinks.File
+
+
+
+//additional enrichers
+Install-Package Serilog.Enrichers.Environment
+Install-Package Serilog.Enrichers.Process
+Install-Package Serilog.Enrichers.Thread
+Install-Package Serilog.Enrichers.ClientInfo
+
+//for open telemetry
+# OpenTelemetry
+Install-Package OpenTelemetry.Extensions.Hosting
+Install-Package OpenTelemetry.Instrumentation.AspNetCore
+Install-Package OpenTelemetry.Instrumentation.Http
+Install-Package OpenTelemetry.Instrumentation.Runtime
+Install-Package OpenTelemetry.Exporter.Console
+Install-Package OpenTelemetry.Exporter.Open
+
+
+
+
+ nerdctl run -d --name jaeger -p 16686:16686 -p 6831:6831/udp jaegertracing/all-in-one:latest
