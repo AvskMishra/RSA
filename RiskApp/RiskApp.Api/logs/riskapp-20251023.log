@@ -1,0 +1,201 @@
+2025-10-23 12:00:56.142 +05:30 [INF] Serilog configured from serilog.config.json
+2025-10-23 12:00:58.283 +05:30 [INF] OpenTelemetry configured (Enable=true).
+2025-10-23 12:01:21.609 +05:30 [INF] Serilog configured from serilog.config.json
+2025-10-23 12:01:21.649 +05:30 [INF] OpenTelemetry configured (Enable=true).
+2025-10-23 12:02:33.586 +05:30 [INF] Serilog configured from serilog.config.json
+2025-10-23 12:02:33.732 +05:30 [INF] OpenTelemetry configured (Enable=true).
+2025-10-23 12:02:34.933 +05:30 [INF] Starting Identity seeding… Roles=2 Users=2
+2025-10-23 12:02:35.128 +05:30 [INF] Role created: Reader
+2025-10-23 12:02:35.136 +05:30 [INF] Role created: Writer
+2025-10-23 12:02:35.283 +05:30 [INF] User created: reader@demo.local
+2025-10-23 12:02:35.346 +05:30 [INF] User reader@demo.local added to role Reader
+2025-10-23 12:02:35.404 +05:30 [INF] User created: writer@demo.local
+2025-10-23 12:02:35.416 +05:30 [INF] User writer@demo.local added to role Writer
+2025-10-23 12:02:35.419 +05:30 [INF] Identity seeding complete.
+2025-10-23 12:02:57.251 +05:30 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 175.3886 ms
+2025-10-23 12:04:49.707 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-10-23 12:04:49.799 +05:30 [ERR] Unhandled exception. TraceId=7f85859e79ce5ee5c157f4e9f99bd561
+System.InvalidOperationException: Unable to resolve service for type 'RiskApp.Application.Auth.IAuthProvider' while attempting to activate 'RiskApp.Api.Controllers.AuthController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method310(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at RiskApp.Api.Middleware.ErrorHandlingMiddleware.InvokeAsync(HttpContext context, RequestDelegate next) in C:\LearningPOC\2k25\RAS\RiskApp\RiskApp.Api\Middleware\ErrorHandlingMiddleware.cs:line 19
+2025-10-23 12:04:49.848 +05:30 [ERR] HTTP POST /api/Auth/token responded 500 in 159.6521 ms
+2025-10-23 12:05:34.919 +05:30 [ERR] Unhandled exception. TraceId=50a2c24cb58a6b13a2ea079bd5e35f20
+System.InvalidOperationException: Unable to resolve service for type 'RiskApp.Application.Auth.IAuthProvider' while attempting to activate 'RiskApp.Api.Controllers.AuthController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method310(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at RiskApp.Api.Middleware.ErrorHandlingMiddleware.InvokeAsync(HttpContext context, RequestDelegate next) in C:\LearningPOC\2k25\RAS\RiskApp\RiskApp.Api\Middleware\ErrorHandlingMiddleware.cs:line 19
+2025-10-23 12:05:34.944 +05:30 [ERR] HTTP POST /api/Auth/token responded 500 in 102.3810 ms
+2025-10-23 12:05:38.204 +05:30 [ERR] Unhandled exception. TraceId=fd2d884a3cd871a07d7ea4dd72fe538b
+System.InvalidOperationException: Unable to resolve service for type 'RiskApp.Application.Auth.IAuthProvider' while attempting to activate 'RiskApp.Api.Controllers.AuthController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method310(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at RiskApp.Api.Middleware.ErrorHandlingMiddleware.InvokeAsync(HttpContext context, RequestDelegate next) in C:\LearningPOC\2k25\RAS\RiskApp\RiskApp.Api\Middleware\ErrorHandlingMiddleware.cs:line 19
+2025-10-23 12:05:38.218 +05:30 [ERR] HTTP POST /api/Auth/token responded 500 in 48.4232 ms
+2025-10-23 12:06:50.843 +05:30 [ERR] Unhandled exception. TraceId=b490273e9e3f6cc7317d66bb0b003746
+System.InvalidOperationException: Unable to resolve service for type 'RiskApp.Application.Auth.IAuthProvider' while attempting to activate 'RiskApp.Api.Controllers.AuthController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method310(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at RiskApp.Api.Middleware.ErrorHandlingMiddleware.InvokeAsync(HttpContext context, RequestDelegate next) in C:\LearningPOC\2k25\RAS\RiskApp\RiskApp.Api\Middleware\ErrorHandlingMiddleware.cs:line 19
+2025-10-23 12:06:50.855 +05:30 [ERR] HTTP POST /api/Auth/token responded 500 in 47.5168 ms
+2025-10-23 12:06:51.446 +05:30 [ERR] Unhandled exception. TraceId=29fc57e1b49931909d964cca94f6bc0c
+System.InvalidOperationException: Unable to resolve service for type 'RiskApp.Application.Auth.IAuthProvider' while attempting to activate 'RiskApp.Api.Controllers.AuthController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method310(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at RiskApp.Api.Middleware.ErrorHandlingMiddleware.InvokeAsync(HttpContext context, RequestDelegate next) in C:\LearningPOC\2k25\RAS\RiskApp\RiskApp.Api\Middleware\ErrorHandlingMiddleware.cs:line 19
+2025-10-23 12:06:51.461 +05:30 [ERR] HTTP POST /api/Auth/token responded 500 in 42.1373 ms
+2025-10-23 12:09:12.466 +05:30 [INF] Serilog configured from serilog.config.json
+2025-10-23 12:09:15.800 +05:30 [INF] OpenTelemetry configured (Enable=true).
+2025-10-23 12:09:20.798 +05:30 [INF] Starting Identity seeding… Roles=2 Users=2
+2025-10-23 12:09:21.132 +05:30 [INF] Role exists: Reader
+2025-10-23 12:09:21.140 +05:30 [INF] Role exists: Writer
+2025-10-23 12:09:21.235 +05:30 [INF] User exists: reader@demo.local
+2025-10-23 12:09:21.315 +05:30 [INF] User reader@demo.local already in role Reader
+2025-10-23 12:09:21.323 +05:30 [INF] User exists: writer@demo.local
+2025-10-23 12:09:21.329 +05:30 [INF] User writer@demo.local already in role Writer
+2025-10-23 12:09:21.334 +05:30 [INF] Identity seeding complete.
+2025-10-23 12:09:33.689 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-10-23 12:09:33.843 +05:30 [ERR] Unhandled exception. TraceId=eda6b4315c5623ffb5a48bec8ad667c7
+System.InvalidOperationException: Unable to resolve service for type 'RiskApp.Application.Auth.IAuthProvider' while attempting to activate 'RiskApp.Api.Controllers.AuthController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method213(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at RiskApp.Api.Middleware.ErrorHandlingMiddleware.InvokeAsync(HttpContext context, RequestDelegate next) in C:\LearningPOC\2k25\RAS\RiskApp\RiskApp.Api\Middleware\ErrorHandlingMiddleware.cs:line 19
+2025-10-23 12:09:33.924 +05:30 [ERR] HTTP POST /api/Auth/token responded 500 in 347.4784 ms
+2025-10-23 12:10:31.406 +05:30 [INF] Serilog configured from serilog.config.json
+2025-10-23 12:10:32.468 +05:30 [INF] Starting Identity seeding… Roles=2 Users=2
+2025-10-23 12:10:32.590 +05:30 [INF] Role exists: Reader
+2025-10-23 12:10:32.596 +05:30 [INF] Role exists: Writer
+2025-10-23 12:10:32.637 +05:30 [INF] User exists: reader@demo.local
+2025-10-23 12:10:32.673 +05:30 [INF] User reader@demo.local already in role Reader
+2025-10-23 12:10:32.683 +05:30 [INF] User exists: writer@demo.local
+2025-10-23 12:10:32.686 +05:30 [INF] User writer@demo.local already in role Writer
+2025-10-23 12:10:32.692 +05:30 [INF] Identity seeding complete.
+2025-10-23 12:11:24.324 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-10-23 12:11:24.402 +05:30 [ERR] Unhandled exception. TraceId=d59e6d020489190c180191ea98e4f82b
+System.InvalidOperationException: Unable to resolve service for type 'RiskApp.Application.Auth.IAuthProvider' while attempting to activate 'RiskApp.Api.Controllers.AuthController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method213(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at RiskApp.Api.Middleware.ErrorHandlingMiddleware.InvokeAsync(HttpContext context, RequestDelegate next) in C:\LearningPOC\2k25\RAS\RiskApp\RiskApp.Api\Middleware\ErrorHandlingMiddleware.cs:line 19
+2025-10-23 12:11:24.491 +05:30 [ERR] HTTP POST /api/Auth/token responded 500 in 263.0796 ms
+2025-10-23 12:12:56.341 +05:30 [ERR] Unhandled exception. TraceId=1d45d8e5495dfbcd71c0d6ae8d654379
+System.InvalidOperationException: Unable to resolve service for type 'RiskApp.Application.Auth.IAuthProvider' while attempting to activate 'RiskApp.Api.Controllers.AuthController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method213(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at RiskApp.Api.Middleware.ErrorHandlingMiddleware.InvokeAsync(HttpContext context, RequestDelegate next) in C:\LearningPOC\2k25\RAS\RiskApp\RiskApp.Api\Middleware\ErrorHandlingMiddleware.cs:line 19
+2025-10-23 12:12:56.366 +05:30 [ERR] HTTP POST /api/Auth/token responded 500 in 146.8782 ms
+2025-10-23 12:20:05.393 +05:30 [INF] Serilog configured from serilog.config.json
+2025-10-23 12:20:10.368 +05:30 [INF] Starting Identity seeding… Roles=2 Users=2
+2025-10-23 12:20:10.983 +05:30 [INF] Role exists: Reader
+2025-10-23 12:20:11.002 +05:30 [INF] Role exists: Writer
+2025-10-23 12:20:11.200 +05:30 [INF] User exists: reader@demo.local
+2025-10-23 12:20:11.351 +05:30 [INF] User reader@demo.local already in role Reader
+2025-10-23 12:20:11.367 +05:30 [INF] User exists: writer@demo.local
+2025-10-23 12:20:11.378 +05:30 [INF] User writer@demo.local already in role Writer
+2025-10-23 12:20:11.388 +05:30 [INF] Identity seeding complete.
+2025-10-23 12:20:17.290 +05:30 [INF] HTTP POST /api/Auth/token responded 200 in 895.8665 ms
+2025-10-23 15:25:41.948 +05:30 [INF] Serilog configured from serilog.config.json
+2025-10-23 15:25:46.533 +05:30 [INF] Starting Identity seeding… Roles=2 Users=2
+2025-10-23 15:25:46.898 +05:30 [INF] Role exists: Reader
+2025-10-23 15:25:46.909 +05:30 [INF] Role exists: Writer
+2025-10-23 15:25:47.027 +05:30 [INF] User exists: reader@demo.local
+2025-10-23 15:25:47.124 +05:30 [INF] User reader@demo.local already in role Reader
+2025-10-23 15:25:47.134 +05:30 [INF] User exists: writer@demo.local
+2025-10-23 15:25:47.141 +05:30 [INF] User writer@demo.local already in role Writer
+2025-10-23 15:25:47.143 +05:30 [INF] Identity seeding complete.
+2025-10-23 15:26:02.224 +05:30 [INF] Listing profiles, skip 0, take 50
+2025-10-23 15:26:02.368 +05:30 [INF] HTTP GET /api/Profiles responded 200 in 407.2063 ms
+2025-10-23 15:26:19.432 +05:30 [INF] Retrieving earning record with ID "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
+2025-10-23 15:26:19.458 +05:30 [INF] Earning record with ID "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb" not found
+2025-10-23 15:26:19.494 +05:30 [INF] HTTP GET /api/Earnings/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb responded 404 in 92.1474 ms
+2025-10-23 15:26:43.403 +05:30 [INF] HTTP GET /api/Earnings/by-profile/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb responded 302 in 18.1547 ms
+2025-10-23 15:26:43.423 +05:30 [INF] HTTP GET /Account/Login responded 404 in 0.7074 ms
+2025-10-23 15:53:37.957 +05:30 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 247.1078 ms
+2025-10-23 15:54:01.600 +05:30 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 119.8508 ms

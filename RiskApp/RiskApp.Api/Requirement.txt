@@ -33,9 +33,9 @@ Tech-Stack:
 
 1.Observability: Serilog + request logging + error middleware. //DONE
 2.Validation: FluentValidation on DTOs + proper 400 responses. //DONE
-3.Analytics endpoints: decision distribution, average score, trend by month.
+3.Analytics endpoints: decision distribution, average score, trend by month.//DONE
+4.Auth (JWT) & basic roles (Reader, Writer).//DONE
 
-4.Auth (JWT) & basic roles (Reader, Writer).
 
 5.Containerization: Dockerfile + docker-compose (SQLite volume).
 6.CI: GitHub Actions or Azure DevOps pipeline to build/test/publish API.

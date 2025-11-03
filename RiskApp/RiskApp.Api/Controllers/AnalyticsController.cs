@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RiskApp.Application.Analytics;
 
 namespace RiskApp.Api.Controllers;
 
+
+[Authorize(Policy = "CanRead")]
 [ApiController]
 [Route("api/[controller]")]
 public class AnalyticsController : ControllerBase

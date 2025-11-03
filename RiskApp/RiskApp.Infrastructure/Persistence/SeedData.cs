@@ -9,6 +9,7 @@ public static class SeedData
     // Call this first: inserts 2 Profiles, 2 EmploymentRecords, 2 Earnings
     public static async Task EnsureSeededAsync(RiskAppDbContext db, CancellationToken ct = default)
     {
+        #region base data seed
         // Idempotency: if any profile exists, assume already seeded
         if (await db.Profiles.AsNoTracking().AnyAsync(ct)) return;
 
@@ -40,13 +41,12 @@ public static class SeedData
         db.Earnings.AddRange(earn1, earn2);
 
         await db.SaveChangesAsync(ct);
+
+        #endregion
     }
 
     // Optional: create 2 RiskAssessment rows via the real service
-    public static async Task EnsureRiskAssessmentsSeededAsync(
-        RiskAppDbContext db,
-        Application.Risk.IRiskAssessmentService riskService,
-        CancellationToken ct = default)
+    public static async Task EnsureRiskAssessmentsSeededAsync( RiskAppDbContext db,Application.Risk.IRiskAssessmentService riskService,CancellationToken ct = default)
     {
         if (await db.RiskAssessments.AsNoTracking().AnyAsync(ct)) return;
 

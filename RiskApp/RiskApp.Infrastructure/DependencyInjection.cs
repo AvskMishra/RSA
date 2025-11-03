@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RiskApp.Application.Abstractions;
 using RiskApp.Application.Analytics;
@@ -14,6 +15,13 @@ using RiskApp.Infrastructure.Profiles;
 using RiskApp.Infrastructure.Risk;
 using RiskApp.Infrastructure.Risk.Providers;
 using RiskApp.Infrastructure.Work;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using RiskApp.Application.Auth;
+using RiskApp.Infrastructure.Auth;
+using Microsoft.Extensions.Configuration;
+using RiskApp.Infrastructure.Users;
 
 namespace RiskApp.Infrastructure;
 
@@ -21,10 +29,50 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, string sqliteConnection)
     {
+        //db context
         services.AddDbContext<RiskAppDbContext>(opt =>
         {
             opt.UseSqlite(sqliteConnection);
+            opt.EnableDetailedErrors();
         });
+
+
+        // ASP.NET Core Identity
+        services.AddIdentity<AppUser, IdentityRole>(opt =>
+        {
+            opt.Password.RequireDigit = true;
+            opt.Password.RequiredLength = 6;
+            opt.Password.RequireUppercase = false;
+            opt.Password.RequireNonAlphanumeric = false;
+        })
+        .AddEntityFrameworkStores<RiskAppDbContext>()
+        .AddDefaultTokenProviders();
+
+        // JWT Bearer
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                var cfg = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = cfg["Jwt:Issuer"],
+                    ValidAudience = cfg["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(cfg["Jwt:Key"]!))
+                };
+            });
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("CanRead", p => p.RequireRole("Reader", "Writer"));
+            options.AddPolicy("CanWrite", p => p.RequireRole("Writer"));
+        });
+
+        // Auth abstractions
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IAuthProvider, IdentityAuthProvider>();
 
         // Generic repo + UoW
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
