@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RiskApp.Application.Earnings;
 
 namespace RiskApp.Api.Controllers;
+
 
 [ApiController]
 [Route("api/[controller]")]
@@ -14,6 +16,7 @@ public class EarningsController : ControllerBase
     /// <response code="201">Created</response>
     /// <response code="400">Validation error</response>
     
+    [Authorize(Policy = "CanWrite")]
     [HttpPost]
     [ProducesResponseType(typeof(EarningReadDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] EarningCreateDto dto, CancellationToken ct)
@@ -34,6 +37,7 @@ public class EarningsController : ControllerBase
     }
 
     /// <summary>List earnings for a profile (newest first).</summary>
+    [Authorize(Policy = "CanRead")]
     [HttpGet("by-profile/{profileId:guid}")]
     [ProducesResponseType(typeof(IReadOnlyList<EarningReadDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ListByProfile([FromRoute] Guid profileId, [FromQuery] int skip = 0, [FromQuery] int take = 50, CancellationToken ct = default)
@@ -43,6 +47,7 @@ public class EarningsController : ControllerBase
     }
 
     /// <summary>Update an earning snapshot.</summary>
+    [Authorize(Policy = "CanWrite")]
     [HttpPut("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -53,6 +58,7 @@ public class EarningsController : ControllerBase
     }
 
     /// <summary>Delete an earning snapshot.</summary>
+    [Authorize(Policy = "CanWrite")]
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

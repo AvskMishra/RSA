@@ -6,6 +6,7 @@ using RiskApp.Api.Observability;
 using RiskApp.Application.Profiles;
 using RiskApp.Application.Risk;
 using RiskApp.Infrastructure;
+using RiskApp.Infrastructure.Auth;
 using RiskApp.Infrastructure.Persistence;
 using Serilog;
 
@@ -16,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddSerilog();
 
 // enable OTel from appsetting.json
-builder.AddOpenTelemetry();
+//builder.AddOpenTelemetry();
 
 // Infrastructure (SQLite + services)
 var conn = builder.Configuration.GetConnectionString("Default")!;
@@ -56,6 +57,22 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "RiskApp API", Version = "v1" });
 
+    // JWT bearer
+    var jwtScheme = new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter: Bearer {your JWT token}"
+    };
+    c.AddSecurityDefinition("Bearer", jwtScheme);
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        [jwtScheme] = Array.Empty<string>()
+    });
+
     // Include XML docs from Api + Application + Domain
     var xmlFiles = new[] { "RiskApp.Api.xml", "RiskApp.Application.xml", "RiskApp.Domain.xml" };
     foreach (var xml in xmlFiles)
@@ -73,6 +90,10 @@ builder.Services.AddHealthChecks();
 // Custom middleware
 builder.Services.AddTransient<ErrorHandlingMiddleware>();
 builder.Services.AddTransient<CorrelationIdMiddleware>();
+
+
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -95,8 +116,6 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 app.MapHealthChecks("/health");
 app.MapHealthChecks("/health/ready");
 
-
-
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -109,6 +128,9 @@ using (var scope = app.Services.CreateScope())
 
     var riskSvc = scope.ServiceProvider.GetRequiredService<IRiskAssessmentService>();
     await SeedData.EnsureRiskAssessmentsSeededAsync(db, riskSvc);
+
+    // for Identity seeding
+    await IdentitySeed.EnsureSeededAsync(scope.ServiceProvider);
 }
 
 // Configure the HTTP request pipeline.
@@ -117,8 +139,12 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

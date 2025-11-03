@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RiskApp.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using RiskApp.Infrastructure.Users;
 
 namespace RiskApp.Infrastructure.Persistence;
 
-public class RiskAppDbContext : DbContext
+public class RiskAppDbContext : IdentityDbContext<AppUser>
 {
     public RiskAppDbContext(DbContextOptions<RiskAppDbContext> options) : base(options) { }
 
@@ -15,6 +17,6 @@ public class RiskAppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(RiskAppDbContext).Assembly);
-        base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(modelBuilder); ; // IMPORTANT: ensures Identity tables
     }
 }
