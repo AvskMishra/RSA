@@ -1,0 +1,31 @@
+﻿RSA:
+------
+Design Consideration:
+---------------------
+1.capture risk asssessment inputs(profile,work,earning)
+2.Assess risk by rules and scorecard(income,credit score,employment history,spending history)
+3.integrate external API for credit and fraud check
+
+
+Non-Functional Requirement;
+----------------------------
+1.concurrancy: 15 user
+2.scalibility: support user growth
+3.performance: web<=3sec API 1-2 Sec Sql <=500ms
+4.compliance:  log all desicion and actions
+
+
+Outcome:
+--------
+1.capture user risk assessment input
+2.rule engine for risk scoring and recommendations
+3.integrate external api for credit and fraud check
+4.Analytics and reporting
+
+
+Tech-Stack:
+-----------
+1. .Net Core,Node js or Python
+2.  React or Angular
+3. SQL Server or PostgreSQL or MongoDB
+4. azure or AWS(document storage,authentication,messaging,notification etc)
