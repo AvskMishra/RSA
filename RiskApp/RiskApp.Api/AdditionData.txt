@@ -58,3 +58,18 @@ dotnet ef database update --project .\src\RiskApp.Infrastructure\ --startup-proj
 
 Add-Migration AddIdentity -Context RiskAppDbContext -Project RiskApp.Infrastructure -StartupProject RiskApp.Api -OutputDir Persistence\Migrations
 Update-Database -Context RiskAppDbContext -Project RiskApp.Infrastructure -StartupProject RiskApp.Api
+
+
+
+service Bus:
+-------------
+(RiskApp.Api)
+Install-Package MassTransit
+Install-Package MassTransit.AspNetCore
+Install-Package MassTransit.RabbitMQ
+Install-Package MassTransit.Azure.ServiceBus.Core
+
+(RiskApp.Infrastructure)
+Install-Package MassTransit
+Install-Package MassTransit.RabbitMQ
+Install-Package MassTransit.Azure.ServiceBus.Core

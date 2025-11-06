@@ -10,6 +10,12 @@ using RiskApp.Infrastructure.Auth;
 using RiskApp.Infrastructure.Persistence;
 using Serilog;
 
+using MassTransit;
+using MassTransit.AzureServiceBusTransport;
+using RiskApp.Infrastructure.Messaging; // consumer
+using RiskApp.Application.Messaging;   // contracts
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -82,6 +88,78 @@ builder.Services.AddSwaggerGen(c =>
             c.IncludeXmlComments(path, includeControllerXmlComments: true);
     }
 });
+
+//message Queueing with MassTransit
+var mq = builder.Configuration.GetSection("Messaging");
+var queueName = mq.GetSection("QueueNames")["ExternalChecks"] ?? "risk.external-checks";
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<ExternalChecksConsumer>();
+
+    var transport = mq["Transport"] ?? "InMemory";
+    var queueName = mq.GetSection("QueueNames")["ExternalChecks"] ?? "risk.external-checks";
+
+    switch (transport)
+    {
+        case "RabbitMq":
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                var host = mq.GetSection("RabbitMq")["Host"] ?? "localhost";
+                var vhost = mq.GetSection("RabbitMq")["VirtualHost"] ?? "/";
+                var user = mq.GetSection("RabbitMq")["Username"] ?? "guest";
+                var pass = mq.GetSection("RabbitMq")["Password"] ?? "guest";
+
+                cfg.Host(host, vhost, h =>
+                {
+                    h.Username(user);
+                    h.Password(pass);
+                });
+
+                cfg.ReceiveEndpoint(queueName, e =>
+                {
+                    e.ConfigureConsumer<ExternalChecksConsumer>(context);
+                });
+            });
+            break;
+
+        case "AzureServiceBus":
+            x.UsingAzureServiceBus((context, cfg) =>
+            {
+                //var conn = mq.GetSection("AzureServiceBus")["ConnectionString"]!;
+                //cfg.Host(conn);
+
+                //cfg.SubscriptionEndpoint<dynamic>(queueName, e =>
+                //{
+                //    e.ConfigureConsumer<ExternalChecksConsumer>(context);
+                //});
+
+                cfg.Host(mq.GetSection("AzureServiceBus")["ConnectionString"]!);
+
+                // EITHER queue-style:
+                cfg.ReceiveEndpoint(queueName, e =>
+                {
+                    e.ConfigureConsumer<ExternalChecksConsumer>(context); // <- explicit type
+                });
+            });
+            break;
+
+        default: // InMemory
+            x.UsingInMemory((context, cfg) =>
+            {
+                cfg.ReceiveEndpoint(queueName, e =>
+                {
+                    e.ConfigureConsumer<ExternalChecksConsumer>(context);
+                });
+            });
+            break;
+    }
+});
+
+
+
+
+
 
 
 // Health checks
