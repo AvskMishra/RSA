@@ -1,4 +1,10 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Folder Name="/Solution Items/Docs/">
+    <File Path="Docs/Setup.md" />
+  </Folder>
   <Project Path="RiskApp.Api/RiskApp.Api.csproj" />
   <Project Path="RiskApp.Application/RiskApp.Application.csproj" />
   <Project Path="RiskApp.Domain/RiskApp.Domain.csproj" />
