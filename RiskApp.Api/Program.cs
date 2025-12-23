@@ -1,19 +1,14 @@
 ﻿using FluentValidation;
-using FluentValidation.AspNetCore;
-using Microsoft.OpenApi.Models;
 using RiskApp.Api.Middleware;
 using RiskApp.Api.Observability;
-using RiskApp.Application.Profiles;
 using RiskApp.Application.Risk;
 using RiskApp.Infrastructure;
 using RiskApp.Infrastructure.Auth;
 using RiskApp.Infrastructure.Persistence;
 using Serilog;
-
 using MassTransit;
-using MassTransit.AzureServiceBusTransport;
-using RiskApp.Infrastructure.Messaging; // consumer
-using RiskApp.Application.Messaging;   // contracts
+using RiskApp.Infrastructure.Messaging;
+using Microsoft.OpenApi;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,10 +26,7 @@ builder.Services.AddInfrastructure(conn);
 
 //Adding FluentValidation (auto-validation + discover validators from Application assembly)
 builder.Services
-    .AddFluentValidationAutoValidation()
-    .AddFluentValidationClientsideAdapters();
-
-builder.Services.AddValidatorsFromAssemblyContaining<RiskApp.Application.Validation.ProfileCreateValidator>();
+    .AddValidatorsFromAssemblyContaining<RiskApp.Application.Validation.ProfileCreateValidator>();
 
 
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
@@ -56,7 +48,24 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 builder.Services.AddControllers();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-//builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    {
+        var jwtScheme = new OpenApiSecurityScheme
+        {
+            Name = "Authorization",
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Description = "Enter: Bearer {your JWT token}"
+        };
+        document.Components ??= new OpenApiComponents();
+        document.Components.SecuritySchemes!["Bearer"] = jwtScheme;
+        return Task.CompletedTask;
+    });    
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -74,10 +83,6 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Enter: Bearer {your JWT token}"
     };
     c.AddSecurityDefinition("Bearer", jwtScheme);
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        [jwtScheme] = Array.Empty<string>()
-    });
 
     // Include XML docs from Api + Application + Domain
     var xmlFiles = new[] { "RiskApp.Api.xml", "RiskApp.Application.xml", "RiskApp.Domain.xml" };

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -72,7 +71,6 @@ public static class ObservabilityExtensions
                        var ep = otel.GetSection("Exporters").GetValue<string>("OtlpEndpoint");
                        t.AddOtlpExporter(o => o.Endpoint = new Uri(ep));
                    }
-                   t.AddJaegerExporter();
                })
                .WithMetrics(m =>
                {
